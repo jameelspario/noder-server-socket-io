@@ -7,16 +7,17 @@ const storage = multer.diskStorage({
         cb(null, "./uploads");
     },
     filename: (req, file, cb) => {
-        cb(null, Date.now + ".jpg");
+        cb(null, Date.now() + ".jpg");
     }
-})
+});
+
 const upload = multer({
     storage: storage,
-})
+});
 
 router.route("/addimage").post(upload.single("img"), (req, res) => {
     try {
-        res.json({ path: file.filename });
+        res.json({ path: req.file.filename });
     } catch (e) {
         return res.json({ error: e });
     }
